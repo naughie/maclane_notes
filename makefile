@@ -9,6 +9,15 @@ GITADD = add $(TARGET)
 GITCOM = commit -m $(MESSAGE)
 GITPUSH = push $(ORIGIN) $(BRANCH)
 
+SCRIPTDIR = ./script
+SCPIPT = $(SCRIPTDIR)/convert.rb
+CONVERT = ruby $(SCRIPT)
+
+all: conv git
+
+conv:
+	$(CONVERT)
+
 git:
 	$(GIT) $(GITADD) && \
 	$(GIT) $(GITCOM) && \
