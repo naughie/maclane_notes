@@ -1,0 +1,168 @@
+\documentclass{naughieLuatex}
+\usepackage{naughieCommands}
+\title{Notes of Categories for the Working Mathematicians}
+\author{Naughie}
+\date{}
+\newcommand\cat\mathscr
+\renewcommand\defterm[1]{ \textbf{\emph{#1}} }
+\newcommand\opair[2]{\langle #1, #2 \rangle}
+\newcommand\ext\tilde
+\newcommand\genby[1]{\langle #1 \rangle}
+\newcommand\thatis{\emph{i. e. }}
+\newcommand\etcetra{\emph{etc. }}
+\newcommand\onept\ast
+\newcommand\EMPH\emph
+\newcommand\catb\mathbf
+\newcommand\POW{\frk P}
+\newcommand\op{\mathrm{op}}
+\newcommand\Vect{\catb{Vect}}
+\newcommand\Set{\catb{Set}}
+\newcommand\Grp{\catb{Grp}}
+\newcommand\Grph{\catb{Grph}}
+\newcommand\Cat{\catb{Cat}}
+\newcommand\Dom{\catb{Dom}}
+\newcommand\Fld{\catb{Fld}}
+\newcommand\Met{\catb{Met}}
+\newcommand\CMet{\catb{CMet}}
+\newcommand\Ens{\catb{Ens}}
+\newcommand\Bilin{\catb{Bilin}}
+\newcommand\Mod{\catb{Mod}}
+\newcommand\Tops{\catb{Top}}
+\newcommand\Ab{\catb{Ab}}
+\newcommand\Rng{\catb{Rng}}
+\begin{document}
+\thispagestyle{onContentsPage}\pagestyle{onContentsPage}\pagenumbering{roman}
+\maketitle\tableofcontents
+\newpage\section*{Preface}\addcontentsline{toc}{section}{Preface}
+これは，\href{https://twitter.com/naughiez}{@naughiez}による，\href{https://www.springer.com/us/book/9780387984032}{MacLane's Categories for the Working Mathematicians}の個人的なメモです．
+\pagestyle{onDocumentsPage}\pagenumbering{arabic}
+
+\setcounter{section}{2}
+
+\section{Universals and Limits}
+\subsection{Universal arrows}
+
+\begin{define}
+  $S \colon \cat D \to \cat C$ をfunctorとし，$c \in \cat C$ をobjectとする．$\opair{r \in \cat D}{u \colon c \to S r}$ が\defterm{universal arrow from $c$ to $S$}であるとは，任意の $\opair{d \in \cat D}{f \colon c \to S d}$ に対し，唯一つの射 $\ext f \colon r \to d$ が存在して，$f = S \ext f \circ u$ とできることをいう．
+  \begin{comdia}
+    r \arrow[dd, dashrightarrow, "\uniq \ext f"] & & & c \arrow[rdd, "f"] & \\
+    \\
+    d & & S r \arrow[ruu, leftarrow, "u"] \arrow[rr, dashrightarrow, "S \ext f"'] &   & S d
+  \end{comdia}
+\end{define}
+
+\begin{align*}
+  & c \xrightarrow u S r \colon \text{universal arrow} \\
+  \Longleftrightarrow \quad & c \xrightarrow u S r \colon \text{initial object in} \ (c \downarrow S)
+\end{align*}
+である．特に，universal arrowは\EMPH{unique up to isomorphism} (if exists).
+
+以下，特に断らない限り，$U \colon \cat D \to \cat C$ は forgetful functorとする．
+
+\begin{exs}
+\item $k$ をfield，$X$ をsetとする．$X \inc U \Span_k X$ はuniversal arrow from $X$ to $U \colon \Vect_k \to \Set$.
+\item $G$ をgraphとすると，$P \colon G \to U \cat C_G$ はuniversal arrow from $G$ to $U \colon \Grph \to \Cat$.
+\item $X$ をset，$\genby X$ を $X$ から生成されたfree groupとする．$X \inc U \genby X$ はuniversal arrow from $X$ to $U \colon \Grp \to \Set$.
+\item $\Dom_m$ を次のように定める：
+  \begin{itemize}
+    \item obj.: objects of $\Dom$, \thatis, integral domains;
+    \item arr.: monomorphic ring homomorphisms between integral domains.
+  \end{itemize}
+  Fields間のring homomorphismsはすべてmonomorphismsであることに注意して（実際，ring homomorphismのkernelは(two sided) idealであるから，自明なものしかない ），$U \colon \Fld \to \Dom_m$ が定まる．$D \in \Dom_m$ に対して $\Frac D$ をそのfield of fractionsとすれば，$D \inc U \Frac D$ はuniversal arrow from $D$ to $U$.
+  \begin{rem}
+    $\Dom_m$ を $\Dom$ に置き換えてはいけない！実際，$F$ をfieldとし，ring homomorphism $f \colon D \to F$ を $\ext f \colon \Frac D \to F$ に拡張するには，
+    \[
+      \ext f \left( \fr 1r \right) = \fr 1{f (r)}
+    \]
+    でなければならない．そのためには，
+    \[
+      r \in D \setminus \{0\} \Longrightarrow f (r) \in F \setminus \{0\}
+    \]
+    \thatis, $f$ はmonomorphismでなければならない．
+  \end{rem}
+\item $\Met$ を次のように定める：
+  \begin{itemize}
+    \item obj.: metric spaces;
+    \item arr.: maps preserving metric.
+  \end{itemize}
+  $\CMet \subset \Met$ を，full subcategory whose objects are completeとする．$X$ をmetric space，$\bar X$ をそのcompletionとすると，$X \to \bar X$ はuniversal arrow from $X$ to $U \colon \CMet \to \Met$.
+\end{exs}
+
+\begin{define}
+  $H \colon \cat D \to \Set$ をfunctorとする．$\opair{r \in \cat D}{e \in H r}$ が\defterm{universal element of $H$}とは，任意の $\opair{d \in \cat D}{x \in H d}$ に対して，唯一つの射 $f \colon r \to d$ が存在して，$(H f) e = x$ とできることをいう．
+\end{define}
+
+\begin{rem}
+  特殊な状況では，universal arrowとuniversal elementは同じものである．
+  \begin{itemize}
+    \item $H \colon \cat D \to \Set$ がfunctorで，$\opair r e$がuniversal elementであるとは，$e \in H r$ を射 $\onept \xrightarrow e H r$ in $\Ens$ と見たときに，$\opair r e$ がuniversal arrow from $\onept$ to $H$ であること．
+      \begin{comdia}
+        r \arrow[dd, dashrightarrow, "\uniq f"] & & & \onept \arrow[rdd, "x"] & \\
+        \\
+        d & & H r \arrow[ruu, leftarrow, "e"] \arrow[rr, dashrightarrow, "H f"'] & & H d
+      \end{comdia}
+    \item 逆に，$\cat C$ をsmall categoryとし，$S \colon \cat D \to \cat C$ をfunctor，$c \in \cat C$ とすると，$\opair r u$ がuniversal arrow from $c$ to $S$ であるとは，これが $H = \cat C (c, S \pholder)$ のuniversal elementであること．
+  \end{itemize}
+\end{rem}
+
+\begin{exs}
+\item $S$ をset，$E \subset S \times S$ を $S$ のequivalence relation，$\pi \colon S \surj \quot S E$ とする．$\opair{\quot S E}{\pi}$ はuniversal element of $H \colon \Set \to \Set$, where
+  \begin{itemize}
+    \item obj.: $H X \defeq \{ f \colon S \to X \deli s E s' \Longrightarrow f s = f s' \}$;
+    \item arr.: $H g \colon H X \ni f \mapsto g \circ f \in H Y$ ($g \colon X \to Y$).
+  \end{itemize}
+\item $G$ をgroup，$N \triangleleft G$，$\pi \colon G \surj \quot G N$ とする．$\opair{\quot G N}{\pi}$ はuniversal element of $H \colon \Grp \to \Set$, where
+  \begin{itemize}
+    \item obj.: $H G' \defeq \{ f \colon G \to G' \deli \text{group hom. s. t.} \ \ker f \subset N \}$;
+    \item arr.: $H g \colon H G' \ni f \mapsto g \circ f \in H G''$ ($g \colon G' \to G''$).
+  \end{itemize}
+\item $V_1, V_2$ をvector spaces / $k$，$H \colon \Vect_k \to \Set$ を次で定まるfunctorとする：
+  \begin{itemize}
+    \item obj.: $H W \defeq \Bilin (V_1, V_2; W) \defeq \{ f \colon V_1 \times V_2 \to W \deli \text{bilinear} \}$;
+    \item arr.: $H g \colon H W \ni f \mapsto g \circ f \in H W'$ ($g \colon W \to W'$).
+  \end{itemize}
+  $\opair{V_1 \otimes_k V_2}{\otimes}$ は，universal element of $H$. ($\otimes \colon V_1 \times V_2 \ni (x, y) \mapsto x \otimes y \in V_1 \otimes_k V_2$.)
+
+  $\Vect_k$ ではなく，$\Mod_R$ でもよい．
+\end{exs}
+
+\begin{define}
+  $S \colon \cat D \to \cat C$ をfunctorとし，$c \in \cat C$ とする．$\opair{r \in \cat D}{v \colon S r \to c}$ が\defterm{universal arrow from $S$ to $c$}であるとは，これが $(S \downarrow c)$ のterminal objectであることをいう．
+  \begin{comdia}
+    d \arrow[dd, dashrightarrow, "\uniq \ext f"] & & S d \arrow[rr, dashrightarrow, "S \ext f"] \arrow[rdd, "f"'] & & S r \\
+    \\
+    r & &     & c \arrow[ruu, leftarrow, "v"'] &
+  \end{comdia}
+\end{define}
+
+\begin{exs}
+\item $\cat C = \Set, \Grp, \Cat, \Tops, \Vect_k$, \etcetra (categories where the direct product $\times$ of two objects are defined) とする．
+
+  $a, b \in \cat C$ を任意に取り，$p \colon a \times b \to a$, $q \colon a \times b \to b$ をcanonical projectionsとする．$\opair p q$ はuniversal arrow to $\opair a b$ from $\Delta \colon \cat C \to \cat C \times \cat C$, where
+  \begin{itemize}
+    \item obj.: $\Delta c \defeq \opair c c$;
+    \item arr.: $\Delta f \defeq \opair f f$.
+  \end{itemize}
+  この $\Delta$ を\defterm{diagonal functor}という．
+  \begin{comdia}
+    \opair{c_1}{c_2} \arrow[rdd, "\opair{f_1}{f_2}"'] \arrow[rr, dashrightarrow, "\uniq \opair{f_1 \times f_2}{f_1 \times f_2}"] & & \opair{a \times b}{a \times b} \\
+    \\
+    & \opair a b \arrow[ruu, leftarrow, "\opair{p}{q}"'] &
+  \end{comdia}
+\end{exs}
+
+\subsubsection*{Exercises}
+
+\begin{enumerate}[label=(\arabic*)]
+  \setcounter{enumi}{1}%
+  \item The universal element of $\POW \colon \Set^\op \to \Set$ (power set) is $\opair{\{ 0, 1 \}}{1 \in \{ 0, 1 \}}$
+  \item $G \in \Grp \ (\text{or}\ \in \Ab)$，$X \in \Set$ とする．The universal arrow from $G, G, X, X$, respectively, to the following forgetful functors are:
+    \begin{itemize}
+      \item $U \colon \Ab \to \Grp \Longrightarrow \opair{\quot{G}{[G, G]}}{\pi \colon G \surj \quot{G}{[G, G]}}$ (commutator group and abelianization),
+      \item $U \colon \Rng \to \Ab \Longrightarrow \opair{R [G]}{\iota \colon G \inc R [G]}$ (group ring),
+      \item $U \colon \Tops \to \Set \Longrightarrow \opair{(X, 2^X)}{\id_X \colon X \to X}$ (discrete topology),
+      \item $U \colon \Set_\onept \to \Set \Longrightarrow \opair{X \coprod \{ X \}}{\iota \colon X \inc X \coprod \{ X \}}$ (one-point compactification).
+    \end{itemize}
+\end{enumerate}
+
+\end{document}
