@@ -15,6 +15,7 @@
 \newcommand\catb\mathbf
 \newcommand\POW{\frk P}
 \newcommand\op{\mathrm{op}}
+\newcommand\nattr{\stackrel{\cdot}{\to}}
 \newcommand\Vect{\catb{Vect}}
 \newcommand\Set{\catb{Set}}
 \newcommand\Grp{\catb{Grp}}
@@ -164,5 +165,107 @@
       \item $U \colon \Set_\onept \to \Set \Longrightarrow \opair{X \coprod \{ X \}}{\iota \colon X \inc X \coprod \{ X \}}$ (one-point compactification).
     \end{itemize}
 \end{enumerate}
+
+\subsection{The Yoneda Lemma}
+
+\begin{prop}<prop:universal-arrow-and-natural-isomorphism>
+  $S \colon \cat D \to \cat C$ をfunctorとし，$c \in \cat C$ とする．$\opair r u$ がuniversal arrow from $c$ to $S$ ならば，
+  \begin{align*}
+    \cat D (r, d) \cong \cat C (c, S d) \quad \text{naturally in} \ d \ \text{via} \ \ext f \mapsto S \ext f \circ u.
+  \end{align*}
+
+  逆に，$\cat D (r, d) \cong \cat C (c, S d)$ naturally in $d$ ならば，唯一つの $u \colon c \to S r$ が存在して，$\opair r u$ はuniversal arrow from $c$ to $S$ である．
+\end{prop}
+
+\begin{proof}
+  ($\Longrightarrow$)
+  $\opair r u$ をuniversal arrow from $c$ to $S$ とする．このとき，（by definition of universal arrows）$\cat D (r, d) \cong \cat C (c, S d)$ である．これが natural in $d$ であることを見るために，$g \colon d \to d'$ とすると，$S (g \colon \ext f) \circ u = S g \circ (S \ext f \circ u)$ となる，\thatis, naturality in $d$ を示せた．
+  \begin{comdia}
+    & r \arrow[rdd, dashrightarrow, "\ext f'"] & & & & c \arrow[dd, "f"] \arrow[rdd, "f'"] & \\
+    \\
+    d \arrow[ruu, dashleftarrow, "\ext f"] \arrow[rr, "g"'] & & d' & & S r \arrow[ruu, leftarrow, "u"] \arrow[r, dashrightarrow, "S \ext f"'] \arrow[rr, bend right=50, dashrightarrow, "S \ext f'"'] & S d \arrow[r, "S g"'] & S d'
+  \end{comdia}
+
+  \begin{comdia}
+    \cat D (r, d) \arrow[rr, "\varphi_d"] \arrow[dd, "{\cat D (r, g)}"'] & & \cat C (c, S d) \arrow[dd, "{\cat C (c, S g)}"] & & \ext f \arrow[rrr, mapsto] \arrow[dd, mapsto] & & & S \ext f \circ u \arrow[dd, mapsto] \\
+    \\
+    \cat D (r, d') \arrow[rr, "\varphi_{d'}"'] & & \cat C (c, S d') & & g \circ \ext f \arrow[rr, mapsto] & & S (g \circ \ext f) \circ u \arrow[r, equal] & S g \circ (S \ext f \circ u)
+  \end{comdia}
+
+  ($\Longleftarrow$)
+  $\cat D (r, d) \xiso{\varphi_d} \cat C (c, S d)$ naturally in $d$ とする．このとき $\varphi_d$ の自然性より，$u \defeq \varphi_r 1_r$ とおけば，任意の $\opair{d \in \cat D}{f \colon c \to S d}$ に対して唯一つの $\ext f \colon r \to d$ が存在して，$f = S \ext f \circ u$ となる．実際，$\ext f \defeq S \varphi_d^{-1} f$ とおけばよい．このような $\ext f$ の一意性は，$\varphi_d$ がbijectiveであることから従う．
+  \begin{comdia}
+    \cat D (r, r) \arrow[rr, "\varphi_r"] \arrow[dd, "{\cat D (r, \ext f)}"'] & & \cat C (c, S r) \arrow[dd, "{\cat C (c, S \ext f)}"] & & 1_r \arrow[rrr, mapsto] \arrow[dd, mapsto] & & & u \defeq \varphi_r 1_r \arrow[dd, mapsto] \\
+    \\
+    \cat D (r, d) \arrow[rr, "\varphi_{d}"'] & & \cat C (c, S d) & & \ext f \arrow[rr, mapsto] & & \varphi_d \ext f \arrow[r, equal] & S \ext f \circ u
+  \end{comdia}
+
+  \begin{comdia}
+    r \arrow[dd, dashrightarrow, "\uniq \varphi_d^{-1} f"] & & & c \arrow[rdd, "f"] & \\
+    \\
+    d & & S r \arrow[ruu, leftarrow, "u"] \arrow[rr, dashrightarrow, "S \varphi_d^{-1} f"'] & & S d
+  \end{comdia}
+\end{proof}
+
+\begin{define}
+  $\cat D$ をcategory whose hom-sets are smallとし，$K \colon \cat D \to \Set$ をfunctorとする．$\opair{r \in \cat D}{\psi \colon \cat D (r, \pholder) \iso K}$ を\defterm{representation of $K$}といい，$r$ を\defterm{representing object}という．A representationが存在するとき，$K$ はrepresentableであるという．
+\end{define}
+
+\tref{prop:universal-arrow-and-natural-isomorphism} より，$\cat C (c, S \pholder)$ は $\opair{r}{\varphi}$ によってrepresentsされ，従ってrepresentableである．
+
+\begin{prop}<prop:representation-and-universal-arrow>
+  $\cat D$ をcategory whose hom-sets are smallとし，$K \colon \cat D \to \Set$ をfunctorとする．もし $\opair{r \in d}{u \colon \onept \to K r}$ がuniversal arrow from $\onept$ to $K$ ならば，
+  \[
+    \psi_d \colon \cat D (r, d) \to K d, \quad \ext f \mapsto K (\ext f) (u \onept)
+  \]
+  によって定まる $\psi$ はrepresentation of $K$ である．
+
+  逆に，$K$ の各representationは，唯一つのuniversal arrow from $\onept$ \to $K$ からこのようにして得られる．
+\end{prop}
+
+\begin{proof}
+  ($\Longrightarrow$)
+  $\opair r u$ をuniversal arrow from $\onept$ to $K$ とすると，\tref{prop:universal-arrow-and-natural-isomorphism} より，
+  \[
+    \psi_d \colon \cat D (r, d) \xiso{\varphi_d} \Set (\onept, K d) \iso K d \quad \text{naturally in}\ d
+  \]
+  なる自然変換 $\psi \colon \cat D (r, \pholder) \iso K$ が存在する．この対応は，
+  \[
+    \ext f \mapsto K \ext f \circ u \mapsto (K \ext f \circ u) = K (\ext f) (u \onept)
+  \]
+  で与えられる．
+
+  ($\Longleftarrow$)
+  逆に，$\opair{r}{\psi}$ をrepresentation of $K$ とする．
+  \[
+    \varphi_d \colon \cat D (r, d) \xiso{\psi_d} K d \iso \Set (\onept, K d) \quad \text{naturally in}\ d
+  \]
+  によってnatural isomorphism $\varphi \colon \cat D (r, \pholder) \iso \Set (\onept, K \pholder)$ を定義すれば，再び \tref{prop:universal-arrow-and-natural-isomorphism} より，唯一つの $u \colon \onept \to K r$ が存在して，$\opair{r}{u}$ はuniversal arrow from $\onept$ to $K$ となる．このとき $K$ は，
+  \[
+    \psi_d \colon \cat D (r, d) \xiso{\varphi_d} \Set (\onept, K d) \iso K d
+  \]
+  によってrepresentsされる．
+\end{proof}
+
+\begin{lem}[Yoneda]<lem:yoneda>
+  $\cat D$ をcategory whose hom-sets are smallとし，$K \colon \cat D \to \Set$ をfunctorとする．このとき，
+  \[
+    \exists y \colon \Nat (\cat D (r, \pholder), K) \iso K r, \quad \alpha \mapsto \alpha_r 1_r.
+  \]
+\end{lem}
+
+\begin{proof}
+  $y \colon \Nat (\cat D (r, \pholder), K) \ni \alpha \mapsto \alpha_r 1_r \in K r$ の逆射を求めればよい．今 $e \in K r$ が任意に与えられたとする．The natural transformation $\alpha \colon \cat D (r, \pholder) \nattr K$ を次のように定める：
+  \[
+    \alpha_d \colon \cat D (r, d) \to K d, \quad \ext f \mapsto K (\ext f) (e).
+  \]
+  このとき $\alpha_r 1_r = K (1_r) (e) = e$ であり，さらに
+  \begin{comdia}
+    d \arrow[dd, "g"] & & \cat D (r, d) \arrow[rr, "\alpha_d"] \arrow[dd, "{\cat D (r, g)}"'] & & K d \arrow[dd, "K g"] & & \ext f \arrow[dd, mapsto] \arrow[rrr, mapsto] & & & K (\ext f) (e) \arrow[dd, mapsto] \\
+    \\
+    d' & & \cat D (r, d') \arrow[rr, "\alpha_{d'}"'] & & K d' & & g \circ \ext f \arrow[rr, mapsto] & & K (g \circ \ext f) (e) \arrow[r, equal] & K (g) (K (\ext f) (e))
+  \end{comdia}
+  となる．よって，$\alpha \in \Nat (\cat D(r, \pholder), K)$ で，$y \alpha = e$，\thatis $y$ is bijective. （$\alpha$ の一意性は \tref{prop:representation-and-universal-arrow} から分かる．）
+\end{proof}
 
 \end{document}
