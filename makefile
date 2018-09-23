@@ -1,4 +1,3 @@
-TEX = latexmk
 TARDIR = ./docs/maclane
 TARGET = $(TARDIR)/categories_for_the_working_mathematicians.pdf
 MESSAGE = "Snapshot at `date -R`"
