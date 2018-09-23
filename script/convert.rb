@@ -4,17 +4,16 @@ Bundler.require
 TARGETDIR = Pathname.new('./img').freeze
 SOURCEDIR = Pathname.new('./docs/maclane').freeze
 
-filename = SOURCEDIR / "#{ARGV[0]}.pdf"
-
 DROPBOX_URL = 'https://content.dropboxapi.com'.freeze
 UPLOAD_PATH = '/2/files/upload'.freeze
 DROPBOX_DIR = Pathname.new('/Pictures/notes').freeze
 
 FileUtils.mkdir_p(TARGETDIR)
 
-puts 'Converting PDF into images...'
+def run filename
 
-begin
+  puts 'Converting PDF into images...'
+
   images = Magick::Image.read(filename) do
     self.format = 'PDF'
     self.quality = 100
@@ -51,3 +50,5 @@ rescue => e
   puts "Aborted! Something bad happend: #{e}"
   FileUtils.rm_r(TARGETDIR, secure: true)
 end
+
+ARGV.each { |f| run SOURCEDIR / "#{f}.pdf" }

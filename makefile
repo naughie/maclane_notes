@@ -1,5 +1,6 @@
 TARDIR = ./docs/maclane
-TARGET = $(TARDIR)/categories_for_the_working_mathematicians.pdf
+CHAPTERS = 2 3
+TARGET = $(wildcard $(TARDIR)/*.pdf)
 MESSAGE = "Snapshot at `date -R`"
 ORIGIN = origin
 BRANCH = master
@@ -10,7 +11,7 @@ GITPUSH = push $(ORIGIN) $(BRANCH)
 
 SCRIPTDIR = ./script
 SCRIPT = $(SCRIPTDIR)/convert.rb
-CONVERT = ruby $(SCRIPT)
+CONVERT = ruby $(SCRIPT) $(CHAPTERS)
 
 all: conv git
 
