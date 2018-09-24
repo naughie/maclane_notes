@@ -8,14 +8,14 @@
 \newcommand\opair[2]{\langle #1, #2 \rangle}
 \newcommand\ext\tilde
 \newcommand\genby[1]{\langle #1 \rangle}
-\newcommand\thatis{\emph{i. e. }}
+\newcommand\thatis{\emph{i. e.}}
 \newcommand\etcetra{\emph{etc. }}
 \newcommand\onept\ast
 \newcommand\EMPH\emph
 \newcommand\catb\mathbf
 \newcommand\POW{\frk P}
 \newcommand\op{\mathrm{op}}
-\newcommand\nattr{\stackrel{\cdot}{\to}}
+\newcommand\nattr{\stackrel{.}{\to}}
 \newcommand\Vect{\catb{Vect}}
 \newcommand\Set{\catb{Set}}
 \newcommand\Grp{\catb{Grp}}
@@ -231,7 +231,7 @@
   \]
   なる自然変換 $\psi \colon \cat D (r, \pholder) \iso K$ が存在する．この対応は，
   \[
-    \ext f \mapsto K \ext f \circ u \mapsto (K \ext f \circ u) = K (\ext f) (u \onept)
+    \ext f \mapsto K \ext f \circ u \mapsto (K \ext f \circ u) (\onept) = K (\ext f) (u \onept)
   \]
   で与えられる．
 
@@ -247,7 +247,7 @@
   によってrepresentsされる．
 \end{proof}
 
-\begin{lem}[Yoneda]<lem:yoneda>
+\begin{lem}[\textgt{米田の補題}（\emph{Yoneda Lemma}）]<lem:yoneda>
   $\cat D$ をcategory whose hom-sets are smallとし，$K \colon \cat D \to \Set$ をfunctorとする．このとき，
   \[
     \exists y \colon \Nat (\cat D (r, \pholder), K) \iso K r, \quad \alpha \mapsto \alpha_r 1_r.
@@ -265,7 +265,82 @@
     \\
     d' & & \cat D (r, d') \arrow[rr, "\alpha_{d'}"'] & & K d' & & g \circ \ext f \arrow[rr, mapsto] & & K (g \circ \ext f) (e) \arrow[r, equal] & K (g) (K (\ext f) (e))
   \end{comdia}
-  となる．よって，$\alpha \in \Nat (\cat D(r, \pholder), K)$ で，$y \alpha = e$，\thatis $y$ is bijective. （$\alpha$ の一意性は \tref{prop:representation-and-universal-arrow} から分かる．）
+  となる．よって，$\alpha \in \Nat (\cat D(r, \pholder), K)$ で，$y \alpha = e$，\thatis, $y$ is bijective. （$\alpha$ の一意性は \tref{prop:representation-and-universal-arrow} から分かる．）
 \end{proof}
 
+\begin{cor}<cor:corollary-to-yoneda-lemma>
+  $\cat D$ をcategory whose hom-sets are smallとし，$r, s \in \cat D$ とする．このとき，任意のnatural transformation $\alpha \colon \cat D (r, \pholder) \nattr \cat D (s, \pholder)$ に対して，唯一つの射 $h \colon s \to r$ が存在して，$\alpha = \cat D (h, \pholder)$ となる，\thatis,
+  \[
+    \alpha_d = \cat D (h, d) \colon \cat D (r, d) \to \cat D (s, d), \quad f \mapsto f \circ h.
+  \]
+\end{cor}
+
+\begin{proof}
+  \tref{lem:yoneda} とその証明をfunctor $K = \cat D (s, \pholder)$ に適用すれば，$\alpha$ に対して唯一つの $h \in \cat D (s, r)$ が存在して，
+  \[
+    \alpha_d \colon \cat D (r, d) \to \cat D (s, d), \quad f \mapsto \cat D (s, f) h = f \circ h
+  \]
+  とできる．
+\end{proof}
+
+\tref{lem:yoneda} の全単射 $y \colon \Nat (\cat D (r, \pholder), K) \iso K r$ は，実はnatural transformationである．それを述べるために，まず $\Nat (\cat D (r, \pholder), K)$ と $K r$ が，$K$ と $r$ に関するfunctorsと見なせることを確認する．
+\begin{itemize}
+  \item $K r$: evaluation functor $E \colon \Set^{\cat D} \times \cat D \to \Set$, where
+    \begin{itemize}
+      \item obj.: $E \opair K r = K r$;
+      \item arr.: $E \opair{\alpha \colon K \nattr K'}{f \colon r \to r'} = K' f \circ \alpha_r = \alpha_{r'} \circ K f \colon K r \to K' r'$
+    \end{itemize}
+  \item $\Nat (\cat D (r, \pholder), K)$: functor $N \colon \Set^{\cat D} \times \cat D \to \Set$, where
+    \begin{itemize}
+      \item obj.: $N \opair K r \defeq \Nat (\cat D (r, \pholder), K)$;
+      \item arr.: $K \opair{\alpha \colon K \nattr K'}{f \colon r \to r'} \colon \Nat (\cat D (r, \pholder), K) \to \Nat (\cat D (r', \pholder), K'), \ \beta \mapsto \alpha \beta \cat D (f, \pholder)$.
+    \end{itemize}
+\end{itemize}
+
+\begin{comdia}
+  \cat D \arrow[rrr, bend left=50, "{\cat D (r', \pholder)}"{name=A}] \arrow[rrr, bend right=50, "{\cat D (r, \pholder)}"'{name=B}] & & & \Set \arrow[Rightarrow, from=A, to=B, "{\cat D (f, \pholder)}"]  & \cat D \arrow[rrr, bend left=50, "{\cat D (r, \pholder)}"{name=C}] \arrow[rrr, bend right=50, "{K}"'{name=D}] & & & \Set \arrow[Rightarrow, from=C, to=D, "\beta"] & \cat D \arrow[rrr, bend left=50, "{K}"{name=E}] \arrow[rrr, bend right=50, "{K'}"'{name=F}] & & & \Set \arrow[Rightarrow, from=E, to=F, "\alpha"]
+\end{comdia}
+
+\begin{lem}
+  \tref{lem:yoneda} における全単射
+  \[
+    y = y_{\opair K r} \colon \Nat (\cat D (r, \pholder), K) \iso K r
+  \]
+  は，natural isomorphism $N \xiso{y_{\opair K r}} E$ を定める．すなわち，$y$ はnatural in $K$ and $r$ である．
+\end{lem}
+
+\begin{proof}
+  $E$ と $N$ の構成から，任意の $\opair K r, \opair{K'}{r'} \in \Set^{\cat D} \times \cat D$ と $\opair \alpha f \colon \opair K r \to \opair{K'}{r'}$ に対して，$\cat D (f, r') 1_{r'} = f = \cat D (r, f) 1_r$ に注意すれば，以下の可換図式から従う：
+  \begin{comdia}
+    \Nat (\cat D (r, \pholder), K) \arrow[rr, "{y_{\opair K r}}"] \arrow[dd, "{N \opair \alpha f}"'] & & K r \arrow[dd, "{E \opair \alpha f}"] & & \beta \arrow[rrr, mapsto] \arrow[dd, mapsto] & & & \beta_r 1_r \arrow[dd, mapsto] \\
+    \\
+    \Nat (\cat D (r', \pholder), K') \arrow[rr, "{y_{\opair{K'}{r'}}}"'] & & K' r' & & \alpha \beta \cat D (f, \pholder) \arrow[rr, mapsto] & & \alpha_{r'} \beta_{r'} \cat D (f, r') (1_{r'}) \arrow[r, equal] & (\alpha_{r'} \circ K f ) (\beta_r 1_r)
+  \end{comdia}
+
+  \begin{comdia}
+    \cat D (r, r) \arrow[dd, "{\cat D (r, f)}"'] \arrow[rr, "\beta_r"] & & K r \arrow[dd, "K f"] & & 1_r \arrow[rrr, mapsto] \arrow[dd, mapsto] & & & \beta_r 1_r \arrow[dd, mapsto] \\
+    \\
+    \cat D (r, r') \arrow[rr, "\beta_{r'}"'] & & K r' & & f \arrow[rr, mapsto] & & \beta_{r'} f \arrow[r, equal] & K (f) (\beta_r 1_r)
+  \end{comdia}
+\end{proof}
+
+The functor $Y \colon \cat D^\op \to \Set^{\cat D}$, defined as
+\begin{itemize}
+  \item obj.: $Y r \defeq \cat D (r, \pholder)$,
+  \item arr.: $Y f \defeq \cat D (f, \pholder) \colon \cat D (r, \pholder) \nattr \cat D (s, \pholder)$ ($f \colon s \to r$),
+\end{itemize}
+を\defterm{Yoneda functor}という．これはfull and faithfulである．実際，full であることも，faithfulであることも，\tref{cor:corollary-to-yoneda-lemma} から従う．
+
+Yoneda functorの双対 $Y' \colon \cat D \to \Set^{\cat D^\op}$ は，次で定まる：
+\begin{itemize}
+  \item obj.: $Y' r \defeq \cat D (\pholder, r)$;
+  \item arr.: $Y' f \defeq \cat D (\pholder, f) \colon \cat D (\pholder, s) \nattr \cat D (\pholder, r)$ ($f \colon s \to r$).
+\end{itemize}
+これはfaithfulである．実際，$f, f' \colon s \rightrightarrows r$ が $Y' f = Y' f'$ とすると，
+\[
+  f = (Y' f)_s 1_s = (Y' f')_s 1_s = f'.
+\]
+
+逆に，これらのfunctor $Y, Y'$ が定義できるのなら，$\cat D$ はcategory whose hom-sets are smallでなければならない．なぜなら，このとき任意の $r, s \in \cat D$ に対して，$\cat D (r, s) = (Y r) s = (Y' s)r \in \Set$ はsmallだからである．
+より大きい $\cat D$ に対しても，$\Set$ を $\Ens$ に置き換えたものが同様に成立する．
 \end{document}
