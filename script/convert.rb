@@ -10,23 +10,26 @@ DROPBOX_DIR = Pathname.new('/Pictures/notes').freeze
 
 FileUtils.mkdir_p(TARGETDIR)
 
-def run filename
-
-  puts 'Converting PDF into images...'
+def conv filename
+  puts "Converting #{filename} into images..."
 
   images = Magick::Image.read(filename) do
     self.format = 'PDF'
     self.quality = 100
-    self.density = 192
+    self.density = 216
   end.each_with_index do |image, i|
     image_name = TARGETDIR / "#{File.basename(filename, '.pdf')}_#{i + 1}.png"
-    image.write image_name
+    image.paint_transparent('white', 1, true).write image_name
     puts "Created #{image_name}!"
   end
 
-  puts 'Finished converting PDF into images.'
-  puts 'Uploading images to Dropbox...'
+  puts "Finished converting #{filename} into images."
+rescue => e
+  puts "Aborted! Something bad happend: #{e}"
+end
 
+def upload
+  puts 'Uploading images to Dropbox...'
   conn = Faraday.new(url: DROPBOX_URL) do |faraday|
     faraday.request :url_encoded
     faraday.response :json
@@ -44,11 +47,11 @@ def run filename
   end
 
   puts 'Finished uploading images.'
-
-  FileUtils.rm_r(TARGETDIR, secure: true)
 rescue => e
   puts "Aborted! Something bad happend: #{e}"
-  FileUtils.rm_r(TARGETDIR, secure: true)
 end
 
-ARGV.each { |f| run SOURCEDIR / "#{f}.pdf" }
+ARGV.each { |f| conv SOURCEDIR / "#{f}.pdf" }
+upload
+
+FileUtils.rm_r(TARGETDIR, secure: true)
