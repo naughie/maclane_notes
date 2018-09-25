@@ -35,6 +35,7 @@
 \newcommand\Ab{\catb{Ab}}
 \newcommand\Rng{\catb{Rng}}
 \newcommand\CRng{\catb{CRng}}
+\newcommand\Matr{\catb{Matr}}
 \begin{document}
 \thispagestyle{onContentsPage}\pagestyle{onContentsPage}\pagenumbering{roman}
 \maketitle\tableofcontents
@@ -448,32 +449,6 @@ $b = \fmly{b_x = a}_{x \in X} \in \cat C^X$ のcoproductを\defterm{copower of $
 \item $\Set$: $a = Y$ のcopowerは，$X \cdot Y = X \times Y$.
 \end{exs}
 
-\subsubsection*{Exercises}
-\begin{enumerate}[label=(\arabic*)]
-  \setcounter{enumi}{5}%
-  \item $a, b \in \cat C$ のcoproductは，functor
-    \[
-      \cat C (a, \pholder) \times \cat C (b, \pholder) \colon \cat C \to \Set, \quad c \mapsto \cat C (a, c) \times \cat C (b, c)
-    \]
-    がrepresentableであるとき，かつそのときに限り存在する．実際，このfunctorがrepresentableであることは，
-    \[
-      \opair{r \in \cat C}{\psi \colon \cat C (r, \pholder) \iso \cat C (a, \pholder) \times \cat C (b, \pholder)}
-    \]
-    が存在することであるから，$r = a \amalg b$ が存在すればrepresentableである．
-
-    逆に，このような $\opair r \psi$ が存在すれば，$r$ がcoproduct of $a$ and $b$ together with injection $\psi_r 1_r = \opair i j$ となる（$h \defeq \psi^{-1} \opair f g$）：
-    \begin{comdia}
-      \cat C (r, r) \arrow[rr, "\psi_r"] \arrow[dd, "{\cat C (r, h)}"'] & & \cat C (a, r) \times \cat C (b, r) \arrow[dd, "{\cat C (a, h) \times \cat C (b, h)}"] & & 1_r \arrow[rrr, mapsto] \arrow[dd, mapsto] & & & \opair i j \arrow[dd, mapsto] \\
-      \\
-      \cat C (r, d) \arrow[rr, "\psi_d"'] & & \cat C (a, d) \times \cat C (b, d) & & h \arrow[rr, mapsto] & & \opair f g \arrow[r, equal] & \opair{h i}{h j}
-    \end{comdia}
-    \begin{comdia}
-      a \arrow[rr, "i"] \arrow[rrdd, "f"'] & & a \amalg b \arrow[rr, leftarrow, "j"] \arrow[dd, dashrightarrow, "{\uniq h}"] & & b \\
-      \\
-      & & d \arrow[rruu, leftarrow, "g"']
-    \end{comdia}
-\end{enumerate}
-
 \subsubsection*{Cokernels}
 
 \begin{define}
@@ -554,6 +529,54 @@ The cokernel $\opair r u$ of $f$ とは，universal element of the functor $H \c
   \]
   である．
 \end{exs}
+
+\subsubsection*{Exercises}
+\begin{enumerate}[label=(\arabic*)]
+  \setcounter{enumi}{2}%
+  \item $\Matr_k$, category consisting of
+    \begin{itemize}
+      \item obj.: $n \in \Z_{\ge 0}$,
+      \item arr.: $m \times n$ matrix $A \colon n \to m$,
+    \end{itemize}
+    を考え，$A, B$ を $m \times n$ matricesとする．$T \defeq A - B$ とおく．$A, B$ のcoequalizerは，$(m - \rank T) \times m$ matrix
+    \[
+      P \defeq ( 1_{m - \rank T}, 0_{\rank T} )
+    \]
+    である．（$1_n$ と $0_n$ は，それぞれ $n \times n$ の単位行列と零行列を表す．）$A \colon n \to m$ を，linear map $\R^n \to \R^m$ と考えると分かりやすい．このとき，（linear mapsとして）$C \colon \R^m \to \R^p$ に対して，
+    \[
+      C A = C B \Longleftrightarrow C T = 0 \Longleftrightarrow \uniq \ext C \colon \coker T \to \R^p \ \text{s.t.} \ C = \ext C P
+    \]
+    が成り立つ．$\coker T = \quot{\R^m}{\im T} \iso \R^{m - \rank T}$ であるから，最初の主張が確かめられる．
+  \setcounter{enumi}{4}%
+  \item $X$ をsetとし，$E \subset X \times X$ をそのequivalence relationとする．$\quot X E$は，以下の図式で定まるcoequalizerである：
+    \begin{comdia}
+      E \arrow[rr, hookrightarrow] & & X \times X \arrow[rr, shift left, twoheadrightarrow, "\pi_1"] \arrow[rr, shift right, twoheadrightarrow, "\pi_2"'] & & X \arrow[rr, twoheadrightarrow, "\pi"] \arrow[rrdd, "f"'] & & \quot X E \arrow[dd, dashrightarrow, "\uniq \ext f"] \\
+      \\
+      & & & & & & Y
+    \end{comdia}
+    ここで，$\pi_i \colon X \times X \surj X$ は $i$-th componentへの射影（$i = 1, 2$），$\pi \colon X \to \quot X E$ は標準的全射である．
+  \item $a, b \in \cat C$ のcoproductは，functor
+    \[
+      \cat C (a, \pholder) \times \cat C (b, \pholder) \colon \cat C \to \Set, \quad c \mapsto \cat C (a, c) \times \cat C (b, c)
+    \]
+    がrepresentableであるとき，かつそのときに限り存在する．実際，このfunctorがrepresentableであることは，
+    \[
+      \opair{r \in \cat C}{\psi \colon \cat C (r, \pholder) \iso \cat C (a, \pholder) \times \cat C (b, \pholder)}
+    \]
+    が存在することであるから，$r = a \amalg b$ が存在すればrepresentableである．
+
+    逆に，このような $\opair r \psi$ が存在すれば，$r$ がcoproduct of $a$ and $b$ together with injection $\psi_r 1_r = \opair i j$ となる（$h \defeq \psi^{-1} \opair f g$）：
+    \begin{comdia}
+      \cat C (r, r) \arrow[rr, "\psi_r"] \arrow[dd, "{\cat C (r, h)}"'] & & \cat C (a, r) \times \cat C (b, r) \arrow[dd, "{\cat C (a, h) \times \cat C (b, h)}"] & & 1_r \arrow[rrr, mapsto] \arrow[dd, mapsto] & & & \opair i j \arrow[dd, mapsto] \\
+      \\
+      \cat C (r, d) \arrow[rr, "\psi_d"'] & & \cat C (a, d) \times \cat C (b, d) & & h \arrow[rr, mapsto] & & \opair f g \arrow[r, equal] & \opair{h i}{h j}
+    \end{comdia}
+    \begin{comdia}
+      a \arrow[rr, "i"] \arrow[rrdd, "f"'] & & a \amalg b \arrow[rr, leftarrow, "j"] \arrow[dd, dashrightarrow, "{\uniq h}"] & & b \\
+      \\
+      & & d \arrow[rruu, leftarrow, "g"']
+    \end{comdia}
+\end{enumerate}
 
 \subsection{Products and Limits}
 
