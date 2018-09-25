@@ -10,7 +10,7 @@
 \newcommand\genby[1]{\langle #1 \rangle}
 \newcommand\fmly\genby
 \newcommand\thatis{\emph{i. e.}}
-\newcommand\etcetra{\emph{etc. }}
+\newcommand\etcetra{\emph{etc.}}
 \newcommand\onept\ast
 \newcommand\EMPH\emph
 \newcommand\catb\mathbf
@@ -141,7 +141,7 @@
 \end{define}
 
 \begin{exs}
-\item $\cat C = \Set, \Grp, \Cat, \Tops, \Vect_k$, \etcetra (categories where the direct product $\times$ of two objects are defined) とする．
+\item $\cat C = \Set, \Grp, \Cat, \Tops, \Vect_k$, \etcetra\ (categories where the direct product $\times$ of two objects are defined) とする．
 
   $a, b \in \cat C$ を任意に取り，$p \colon a \times b \to a$, $q \colon a \times b \to b$ をcanonical projectionsとする．$\opair p q$ はuniversal arrow to $\opair a b$ from $\Delta \colon \cat C \to \cat C \times \cat C$, where
   \begin{itemize}
@@ -302,7 +302,7 @@
 \end{itemize}
 
 \begin{comdia}
-  \cat D \arrow[rrr, bend left=50, "{\cat D (r', \pholder)}"{name=A}] \arrow[rrr, bend right=50, "{\cat D (r, \pholder)}"'{name=B}] & & & \Set \arrow[Rightarrow, from=A, to=B, "{\cat D (f, \pholder)}"]  & \cat D \arrow[rrr, bend left=50, "{\cat D (r, \pholder)}"{name=C}] \arrow[rrr, bend right=50, "{K}"'{name=D}] & & & \Set \arrow[Rightarrow, from=C, to=D, "\beta"] & \cat D \arrow[rrr, bend left=50, "{K}"{name=E}] \arrow[rrr, bend right=50, "{K'}"'{name=F}] & & & \Set \arrow[Rightarrow, from=E, to=F, "\alpha"]
+  \cat D \arrow[rrr, bend left=50, "{\cat D (r', \pholder)}", ""'{name=A}] \arrow[rrr, bend right=50, "{\cat D (r, \pholder)}"', ""{name=B}] & & & \Set \arrow[Rightarrow, from=A, to=B, "{\cat D (f, \pholder)}"]  & \cat D \arrow[rrr, bend left=50, "{\cat D (r, \pholder)}", ""'{name=C}] \arrow[rrr, bend right=50, "{K}"', ""{name=D}] & & & \Set \arrow[Rightarrow, from=C, to=D, "\beta"] & \cat D \arrow[rrr, bend left=50, "{K}", ""'{name=E}] \arrow[rrr, bend right=50, "{K'}"', ""{name=F}] & & & \Set \arrow[Rightarrow, from=E, to=F, "\alpha"]
 \end{comdia}
 
 \begin{lem}
@@ -473,6 +473,87 @@ $b = \fmly{b_x = a}_{x \in X} \in \cat C^X$ のcoproductを\defterm{copower of $
       & & d \arrow[rruu, leftarrow, "g"']
     \end{comdia}
 \end{enumerate}
+
+\subsubsection*{Cokernels}
+
+\begin{define}
+  $\cat C$ をcategory that has the null object $z$ とし，$f \colon a \to b$ とする．$\opair{e \in \cat C}{u \colon b \to e}$ が\defterm{cokernel of $f$}であるとは，$u f = 0$ であって，任意の射 $h \colon b \to c$ with $h f = 0$ に対して，唯一つの射 $\ext h \colon e \to c$ が存在して，$h = \ext h \circ u$ とできることをいう．
+  \begin{comdia}
+    a \arrow[rr, "f"] & & b \arrow[rr, "u"] \arrow[rrdd, "h"'] & & e \arrow[dd, dashrightarrow, "\uniq \ext h"] \\
+    \\
+    & & & & c
+  \end{comdia}
+\end{define}
+
+The cokernel $\opair r u$ of $f$ とは，universal element of the functor $H \colon \cat C \to \Set$, where
+\[
+  H c \defeq \{ h \colon b \to c \deli h f = 0 \},
+\]
+に他ならない．
+
+\begin{exs}
+\item $\cat C = \Grp, \Ab, \Rng, \lMod$, \etcetra, とする．$\cat C$ におけるcokernel of $f \colon a \to b$ は，通常の意味でのcokernelである．すなわち，$\opair{\coker f \defeq \quot{b}{\im f}}{\pi \colon b \surj \coker f}$ のこと．
+\end{exs}
+
+\subsubsection*{Coequalizers}
+
+\begin{define}
+  $\cat C$ をcategoryとし，$f, g \colon a \rightrightarrows b$ を $\cat C$ の射とする．$\opair{e \in \cat C}{u \colon b \to e}$ が\defterm{coequalizer of $\opair f g$}であるとは，$u f = u g$ であって，任意の射 $h \colon b \to c$ with $h f = h g$ に対して，唯一つの射 $\ext h \colon e \to c$ が存在して，$h = \ext h u$ とできることをいう．
+  \begin{comdia}
+    a \arrow[rr, shift left, "f"] \arrow[rr, shift right, "g"'] & & b \arrow[rr, "u"] \arrow[rrdd, "h"'] & & e \arrow[dd, dashrightarrow, "\uniq \ext h"] \\
+    \\
+    & & & & c
+  \end{comdia}
+\end{define}
+
+\begin{rem}
+  The coequalizerをuniversal arrowと考えることもできる．$\downdownarrows$ を，category $\cdot \rightrightarrows \cdot$ that has only two objectsとする．このとき，$\cat C^\downdownarrows$ は，category consisting of
+  \begin{itemize}
+    \item obj.: 射 $\opair f g \colon a \rightrightarrows b$;
+    \item arr.: 射 $\opair f g \colon a \rightrightarrows b$ と $\opair{f'}{g'} \colon a' \rightrightarrows b'$ に対して，$\opair{h \colon a \to a'}{k \colon b \to b'}$ s.t. $k f = f' h$ and $k g = g' h$.
+  \end{itemize}
+  \begin{comdia}
+    a \arrow[rr, shift left, "f"] \arrow[rr, shift right, "g"'] \arrow[dd, "h"'] & & b \arrow[dd, "k"] \\
+    \\
+    a' \arrow[rr, shift left, "f'"] \arrow[rr, shift right, "g'"'] & & b'
+  \end{comdia}
+  $\Delta \colon \cat C \to \cat C^\downdownarrows$ をdiagonal functor, defined as:
+  \begin{itemize}
+    \item obj.: $\Delta c \defeq \opair{1_c}{1_c}$,
+    \item arr.: $\Delta r \defeq \opair r r \colon \opair{1_c}{1_c} \to \opair{1_{c'}}{1_{c'}}$ ($r \colon c \to c'$),
+  \end{itemize}
+  \begin{comdia}
+    c \arrow[dd, "r"'] & & c \arrow[rr, shift left, "1_c"] \arrow[rr, shift right, "1_c"'] \arrow[dd, "r"'] & & c \arrow[dd, "r"] \\
+    \\
+    c' & & c' \arrow[rr, shift left, "1_{c'}"] \arrow[rr, shift right, "1_{c'}"'] & & c'
+  \end{comdia}
+  とする．
+
+  このとき，射 $h \colon b \to c$ with $h f = h g$, where $f, g \colon a \rightrightarrows b$, とは，$\cat C^\downdownarrows$ の射 $\opair{h f}{h} \colon \opair f g \to \opair{1_c}{1_c}$ のことである．
+  \begin{comdia}
+    a \arrow[rr, shift left, "f"] \arrow[rr, shift right, "g"'] \arrow[dd, "h f"'] & & b \arrow[dd, "h"] \\
+    \\
+    c \arrow[rr, shift left, "1_c"] \arrow[rr, shift right, "1_c"'] & & c
+  \end{comdia}
+
+  従って，$\opair e u$ がcoequalizer of $\opair f g$ であるとは，universal arrow from $\opair f g$ to $\Delta$ に他ならない．
+  \begin{comdia}
+    e \arrow[dd, dashrightarrow, "\uniq \ext h"] & & & \opair f g \arrow[rdd, "\opair{h f}{h}"] \\
+    \\
+    c & & \opair{1_e}{1_e} \arrow[ruu, leftarrow, "\opair{u f}{u}"] \arrow[rr, dashrightarrow, "\opair{\ext h}{\ext h}"'] & & \opair{1_c}{1_c}
+  \end{comdia}
+\end{rem}
+
+任意の平行射の族 $\fmly{f_x \colon a \to b}_{x \in X}$ についても同様に定義できる．すなわち，$\opair e u$ がcoequalizer of $\fmly{f_x}$ であるとは，$u f_x = u f_y$ ($\forall x, y \in X$) であって，任意の射 $h \colon b \to c$ with $h f_x = h f_y$ ($\forall x, y \in X$) に対して，唯一つの射 $\ext h \colon e \to c$ が存在して，$h = \ext h u$ とできることをいう．
+
+\begin{exs}
+\item $\cat C = \Grp, \Ab, \Rng, \lMod$, \etcetra, とする．$f, g \colon a \rightrightarrows b$ のcoequalizerは，$f - g$ のcokernel $b \surj \coker (f - g)$ である．
+\item $\cat C = \Set, \Tops$, \etcetra, とする．$f, g \colon a \rightrightarrows b$ のcoequalizerは，$\opair{\quot b R}{\pi \colon b \surj \quot b R}$, where
+  \[
+    R \defeq \{ \opair{f x}{g x} \deli x \in a \} \subset b \times b,
+  \]
+  である．
+\end{exs}
 
 \subsection{Products and Limits}
 
