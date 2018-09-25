@@ -17,6 +17,7 @@
 \newcommand\POW{\frk P}
 \newcommand\op{\mathrm{op}}
 \newcommand\nattr{\stackrel{.}{\to}}
+\newcommand\pushoutc{{\cdot \leftarrow \cdot \rightarrow \cdot}}
 \newcommand\Vect{\catb{Vect}}
 \newcommand\Set{\catb{Set}}
 \newcommand\Grp{\catb{Grp}}
@@ -530,9 +531,74 @@ The cokernel $\opair r u$ of $f$ とは，universal element of the functor $H \c
   である．
 \end{exs}
 
+\subsubsection*{Pushouts}
+
+\begin{define}
+  $\cat C$ をcategoryとし，$f \colon a \to b$, $g \colon a \to c$ とする．$\opair{r \in \cat C}{u \colon b \to r, v \colon c \to r}$ がpushout of $\opair f g$ であるとは，$u f = v g$ であって，任意の $\opair{s \in \cat C}{h \colon b \to s, k \colon c \to s}$ with $h f = k g$ に対して，唯一つの射 $t \colon r \to s$ が存在して，$h = t u$ かつ $k = t v$ とできることをいう．
+  \[
+    r = b \amalg_a c = b \amalg_{\opair f g} c
+  \]
+  などと表す．
+  \begin{comdia}
+    & & b \arrow[rrdd, "u"] \arrow[rrrrdd, bend left=20, "h"] \\
+    \\
+    a \arrow[rruu, "f"] \arrow[rrdd, "g"'] & & & & r \arrow[rr, dashrightarrow, "\uniq t"] & & s \\
+    \\
+                                          & & c \arrow[rruu, "v"'] \arrow[rrrruu, bend right=20, "k"']
+  \end{comdia}
+\end{define}
+
+\begin{rem}
+  The pushout of $\opair f g$ をuniversal arrowとして捉える．$\cat C^\pushoutc$ は，category consisting of
+  \begin{itemize}
+    \item obj.: $\opair h k \colon \opair a a \to \opair b c$,
+    \item arr.: $\opair h k \to \opair{h'}{k'}$, s.t.
+      \begin{comdia}
+        b \arrow[dd] \arrow[rr, leftarrow, "h"] & & a \arrow[dd] \arrow[rr, "k"] & & c \arrow[dd] \\
+        \\
+        b' \arrow[rr, leftarrow, "h'"'] & & a' \arrow[rr, "k'"'] & & c'
+      \end{comdia}
+  \end{itemize}
+  である．$\Delta \colon \cat C \to \cat C^\pushoutc$ を，diagonal functor, where
+  \begin{itemize}
+    \item obj.: $\Delta r \defeq \opair{1_r}{1_r}$,
+    \item arr.: $\Delta h \defeq \fmly{h, h, h} \colon \opair{1_r}{1_r} \to \opair{1_s}{1_s}$, ($h \colon r \to s$),
+  \end{itemize}
+  とする．このとき，$\opair h k \colon \opair b c \to \opair s s$ with $h f = k g$ とは，射 $\fmly{h f, h, k} \colon \opair f g \to \Delta s$ のことである．
+  \begin{comdia}
+    b \arrow[dd, "h"'] \arrow[rr, leftarrow, "f"] & & a \arrow[dd, "h f"] \arrow[rr, "g"] & & c \arrow[dd, "k"] \\
+    \\
+    s \arrow[rr, leftarrow, "1_s"'] & & s \arrow[rr, "1_s"'] & & s
+  \end{comdia}
+  従って，pushout $\opair{r}{u, v}$ of $\opair f g$ とは，universal arrow from $\opair f g$ to $\Delta$ のことである．
+\end{rem}
+
+\begin{exs}
+\item $\cat C = \Set, \Tops, \Grp, \Ab, \Rng, \lMod$, \etcetra, とする．$\opair f g \colon \opair a a \to \opair b c$ のpushoutは，$b \amalg c$ において，$f x \in b$ と $g x \in c$ を同一視したものである．（演習問題(2)参照．）
+\end{exs}
+
 \subsubsection*{Exercises}
 \begin{enumerate}[label=(\arabic*)]
-  \setcounter{enumi}{2}%
+  \setcounter{enumi}{1}%
+  \item $\cat C$ をcategory that has coproduct and coequalizer of every pair of two objectsとし，$\opair f g \colon \opair a a \to \opair b c$ とする．このとき，pushout of $\opair f g$ は存在する．まず，coproductの普遍性より，任意の $\opair h k \colon \opair b c \to \opair s s$ に対して，唯一つの射 $q \colon b \amalg c \to s$ が存在して，$q i = h$ かつ $q j = k$ となる．
+    \begin{comdia}
+      & & b \arrow[rrdd, "i"] \arrow[rrrrdd, bend left=20, "h"] \\
+      \\
+      a \arrow[rruu, "f"] \arrow[rrdd, "g"'] \arrow[rrrr, shift left, "i f"] \arrow[rrrr, shift right, "j g"'] & & & & b \amalg c \arrow[rr, dashrightarrow, "\uniq q"] & & s \\
+      \\
+      & & c \arrow[rruu, "j"'] \arrow[rrrruu, bend right=20, "k"']
+    \end{comdia}
+    The coequalizer of $\opair{i f}{j g} \colon a \rightrightarrows b \amalg c$ が存在し，それを $p \colon b \amalg c \to r$ とおく．
+    \begin{comdia}
+      a \arrow[rr, shift left, "i f"] \arrow[rr, shift right, "j g"'] & & b \amalg c \arrow[rr, "p"] \arrow[rrdd, "q"'] & & r \arrow[dd, dashrightarrow, "\uniq t"] \\
+      \\
+      & & & & s
+    \end{comdia}
+    すると，$\opair{r}{p i, p j}$ がpushout of $\opair f g$ になる．実際，$(p i) f = (p j) g$ は定義から明らかである．任意の射 $\opair h k \colon \opair b c \to \opair s s$ with $h f = k g$ に対して，$q i = h$ かつ $q j = k$ なる唯一の射 $q \colon b \amalg c \to s$ を取れば，
+    \[
+      q (i f) = (q i) f = h f = k g = (q j) g = q (j g)
+    \]
+    であるから，coequalizerの普遍性より $q = t p$ なる唯一の射 $t \colon r \to s$ が存在する．このとき，$t (p i) = q i = h$ かつ $t (p j) = q j = k$ となる．よって，$\opair{r}{p i, p j}$ はpushout of $\opair f g$ である．
   \item $\Matr_k$, category consisting of
     \begin{itemize}
       \item obj.: $n \in \Z_{\ge 0}$,
