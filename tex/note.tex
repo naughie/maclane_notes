@@ -8,6 +8,7 @@
 \newcommand\opair[2]{\langle #1, #2 \rangle}
 \newcommand\ext\tilde
 \newcommand\genby[1]{\langle #1 \rangle}
+\newcommand\fmly\genby
 \newcommand\thatis{\emph{i. e.}}
 \newcommand\etcetra{\emph{etc. }}
 \newcommand\onept\ast
@@ -28,9 +29,12 @@
 \newcommand\Ens{\catb{Ens}}
 \newcommand\Bilin{\catb{Bilin}}
 \newcommand\Mod{\catb{Mod}}
+\newcommand\rMod[1][R]{\Mod_{#1}}
+\newcommand\lMod[1][R]{\vphantom{\Mod}_{#1} \Mod}
 \newcommand\Tops{\catb{Top}}
 \newcommand\Ab{\catb{Ab}}
 \newcommand\Rng{\catb{Rng}}
+\newcommand\CRng{\catb{CRng}}
 \begin{document}
 \thispagestyle{onContentsPage}\pagestyle{onContentsPage}\pagenumbering{roman}
 \maketitle\tableofcontents
@@ -124,7 +128,7 @@
   \end{itemize}
   $\opair{V_1 \otimes_k V_2}{\otimes}$ は，universal element of $H$. ($\otimes \colon V_1 \times V_2 \ni (x, y) \mapsto x \otimes y \in V_1 \otimes_k V_2$.)
 
-  $\Vect_k$ ではなく，$\Mod_R$ でもよい．
+  $\Vect_k$ ではなく，$\rMod$ でもよい．
 \end{exs}
 
 \begin{define}
@@ -162,7 +166,7 @@
       \item $U \colon \Ab \to \Grp \Longrightarrow \opair{\quot{G}{[G, G]}}{\pi \colon G \surj \quot{G}{[G, G]}}$ (commutator group and abelianization),
       \item $U \colon \Rng \to \Ab \Longrightarrow \opair{R [G]}{\iota \colon G \inc R [G]}$ (group ring),
       \item $U \colon \Tops \to \Set \Longrightarrow \opair{(X, 2^X)}{\id_X \colon X \to X}$ (discrete topology),
-      \item $U \colon \Set_\onept \to \Set \Longrightarrow \opair{X \coprod \{ X \}}{\iota \colon X \inc X \coprod \{ X \}}$ (one-point compactification).
+      \item $U \colon \Set_\onept \to \Set \Longrightarrow \opair{X \amalg \{ X \}}{\iota \colon X \inc X \amalg \{ X \}}$ (one-point compactification).
     \end{itemize}
 \end{enumerate}
 
@@ -343,4 +347,133 @@ Yoneda functorの双対 $Y' \colon \cat D \to \Set^{\cat D^\op}$ は，次で定
 
 逆に，これらのfunctor $Y, Y'$ が定義できるのなら，$\cat D$ はcategory whose hom-sets are smallでなければならない．なぜなら，このとき任意の $r, s \in \cat D$ に対して，$\cat D (r, s) = (Y r) s = (Y' s)r \in \Set$ はsmallだからである．
 より大きい $\cat D$ に対しても，$\Set$ を $\Ens$ に置き換えたものが同様に成立する．
+
+\subsection{Coproducts and Colimits}
+
+\subsubsection*{Coproducts}
+
+\begin{define}
+  $\cat C$ をcategoryとし，$a, b \in \cat C$ とする．$\opair{c \in \cat C}{\opair i j \colon \opair a b \to \opair c c }$ が\defterm{coproduct of $a$ and $b$}であるとは，$\opair{c}{i, j}$ がuniversal arrow from $\opair a b$ to the diagonal functor $\Delta$ であることをいう．このとき，
+  \[
+    c = a \amalg b = a \oplus b
+  \]
+  などと書く．
+  $i, j$ を\defterm{injections}という．
+
+  \begin{comdia}
+    a \arrow[rr, "i"] \arrow[rrdd, "f"'] & & a \amalg b \arrow[rr, leftarrow, "j"] \arrow[dd, dashrightarrow, "\uniq h"] & & b \\
+    \\
+    & & d \arrow[rruu, leftarrow, "g"']
+  \end{comdia}
+\end{define}
+
+$a, b$ のcoproductについて，以下の全単射がある：
+\[
+  \cat C (a, d) \times \cat C (b, d) \iso \cat C (a \amalg b, d), \quad \opair f g \mapsto h, \quad \text{naturally in}\ d,
+\]
+with inverse $h \mapsto \opair{h i}{h j}$.
+
+\begin{rem}
+  $\cat C$ をcategory every two of whose objects have the coproductとすると，bifunctor $\amalg \colon \cat C \times \cat C \to \cat C$ を定める：
+  \begin{itemize}
+    \item obj.: $\opair a b \mapsto a \amalg b$;
+    \item arr.: $\opair h k \mapsto h \amalg k$, defined by the following diagram:
+  \end{itemize}
+  \begin{comdia}
+    a \arrow[rr, "i"] \arrow[dd, "h"'] \arrow[rrdd, "i' h"'] & & a \amalg b \arrow[rr, leftarrow, "j"] \arrow[dd, dashrightarrow, "\uniq h \amalg k"] & & b \arrow[dd, "k"] \\
+    \\
+    a' \arrow[rr, "i'"'] & & a' \amalg b' \arrow[rruu, leftarrow, "j' k"'] \arrow[rr, leftarrow, "j'"'] & & b'
+  \end{comdia}
+\end{rem}
+
+\begin{exs}
+\item $\Set$: disjoint union $a \inc a \amalg b \rinc b$.
+\item $\Tops$: disjoint union $a \inc a \amalg b \rinc b$.
+\item $\Tops_\onept$: wedge product $\opair{a}{\onept_a} \inc \quot{a \amalg b}{\genby{\onept_a = \onept_b}} \rinc \opair{b}{\onept_b}$.
+\item $\Ab, \lMod$: direct sum $a \inc a \oplus b \rinc b$.
+\item $\Grp$: free group $a \inc \genby{a, b} \rinc b$.
+\item $\CRng$: tensor product $a \inc a \otimes b \rinc b$.
+\item $P$ (preordered set): least upper bound $a \le a \cup b \ge b$.
+\end{exs}
+
+\subsubsection*{Infinite Coproducts}
+$X$ をsetとする．
+$\Delta \colon \cat C \to \cat C^X$ を\defterm{diagonal functor}, where
+\begin{itemize}
+  \item obj.: $\Delta c \defeq \fmly{c_x = c}_{x \in X}$,
+  \item arr.: $\Delta f \defeq \fmly{f_x = f}_{x \in X}$,
+\end{itemize}
+とする．
+
+\begin{define}
+  $\cat C$ をcategory，$X$ をsetとし，$a = \fmly{a_x}_{x \in X} \in \cat C^X$ とする．$\opair{c \in \cat C}{i_x \colon a_x \to c, x \in X}$ が\defterm{coproduct of $a$}であるとは，$\opair{c}{i_x, x \in X}$ がuniversal arrow from $a$ to $\Delta$ であることをいう．このとき，
+  \begin{align*}
+    c &= \coprod_{x \in X} a_x = \coprod a_x = \coprod a \\
+      &= \bigoplus_{x \in X} a_x = \bigoplus a_x = \bigoplus a \\
+  \end{align*}
+  などと書く．
+  \begin{comdia}
+    a_x \arrow[rr, "i_x"] \arrow[rrdd, "f_x"'] & & \coprod_{x'} a_{x'} \arrow[dd, dashrightarrow, "\uniq \ext f"] \\
+    \\
+    & & d
+  \end{comdia}
+\end{define}
+$a = \fmly{a_x} \in \cat C^X$ のcoproductについて，以下の全単射がある：
+\[
+  \prod_{x \in X} \cat C (a_x, d) \iso \cat C \left( \coprod_{x \in X} a_x, d \right), \quad \fmly{f_x} \mapsto \ext f, \quad \text{naturally in} \ d,
+\]
+with inverse $f \mapsto \fmly{f i_x}$.
+
+\begin{rem}
+  $\cat C$ をcategory every $X$-fold family of whose objects have the coproductとすると，$X$-fold functor $\coprod \colon \cat C^X \to \cat C$ を定める：
+  \begin{itemize}
+    \item obj.: $\fmly{a_x} \mapsto \coprod a_x$;
+    \item arr.: $\fmly{h_x} \mapsto \coprod h_x$, defined by the following diagram:
+  \end{itemize}
+  \begin{comdia}
+    a_x \arrow[rr, "i_x"] \arrow[dd, "h_x"'] \arrow[rrdd, "j_x h_x"'] & & \coprod a_{x'}\arrow[dd, dashrightarrow, "\uniq \coprod h_{x'}"] \\
+    \\
+    b_x \arrow[rr, "j_x"'] & & \coprod b_{x'}
+  \end{comdia}
+\end{rem}
+
+\subsubsection*{Copowers}
+
+$b = \fmly{b_x = a}_{x \in X} \in \cat C^X$ のcoproductを\defterm{copower of $a$}といい，$X \cdot a \defeq \coprod_x a$ と書く．このとき，
+\[
+  \cat C (a, d)^X \iso \cat C (X \cdot a, d), \quad \text{naturally in}\ d.
+\]
+
+\begin{exs}
+\item $\Set$: $a = Y$ のcopowerは，$X \cdot Y = X \times Y$.
+\end{exs}
+
+\subsubsection*{Exercises}
+\begin{enumerate}[label=(\arabic*)]
+  \setcounter{enumi}{5}%
+  \item $a, b \in \cat C$ のcoproductは，functor
+    \[
+      \cat C (a, \pholder) \times \cat C (b, \pholder) \colon \cat C \to \Set, \quad c \mapsto \cat C (a, c) \times \cat C (b, c)
+    \]
+    がrepresentableであるとき，かつそのときに限り存在する．実際，このfunctorがrepresentableであることは，
+    \[
+      \opair{r \in \cat C}{\psi \colon \cat C (r, \pholder) \iso \cat C (a, \pholder) \times \cat C (b, \pholder)}
+    \]
+    が存在することであるから，$r = a \amalg b$ が存在すればrepresentableである．
+
+    逆に，このような $\opair r \psi$ が存在すれば，$r$ がcoproduct of $a$ and $b$ together with injection $\psi_r 1_r = \opair i j$ となる（$h \defeq \psi^{-1} \opair f g$）：
+    \begin{comdia}
+      \cat C (r, r) \arrow[rr, "\psi_r"] \arrow[dd, "{\cat C (r, h)}"'] & & \cat C (a, r) \times \cat C (b, r) \arrow[dd, "{\cat C (a, h) \times \cat C (b, h)}"] & & 1_r \arrow[rrr, mapsto] \arrow[dd, mapsto] & & & \opair i j \arrow[dd, mapsto] \\
+      \\
+      \cat C (r, d) \arrow[rr, "\psi_d"'] & & \cat C (a, d) \times \cat C (b, d) & & h \arrow[rr, mapsto] & & \opair f g \arrow[r, equal] & \opair{h i}{h j}
+    \end{comdia}
+    \begin{comdia}
+      a \arrow[rr, "i"] \arrow[rrdd, "f"'] & & a \amalg b \arrow[rr, leftarrow, "j"] \arrow[dd, dashrightarrow, "{\uniq h}"] & & b \\
+      \\
+      & & d \arrow[rruu, leftarrow, "g"']
+    \end{comdia}
+\end{enumerate}
+
+\subsection{Products and Limits}
+
 \end{document}
