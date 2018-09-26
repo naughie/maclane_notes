@@ -714,20 +714,6 @@ The cokernel $\opair r u$ of $f$ とは，universal element of the functor $H \c
     \]
     と定めれば，これが $\ext f \circ \iota_H = f_H$ ($\forall \iota_H \colon H \in J_A \inc A$) なる唯一のgroup homomorphismである．（$A = \bigcup_{H \in J_A} J_A$ に注意せよ．）
 
-    これを一般化する．$\cat C = \Set, \Tops, \Grp, \Ab, \Rng, \lMod$, \etcetra, とする．$J$ をfamily of objects of $\cat C$ とし，包含関係について前順序集合と見る．$c$ を，$\bigcup_{d \in J} d$ から生成されるfree object (\thatis, coproduct of $J$) を各 $\iota_{d, d'} \colon d \inc d'$ で割ったのもとする．自然な包含写像 $\iota_d \colon d \inc c$ を取る．明らかに，すべての $\iota_{d, d'} \colon d \inc d'$ に対して，$\iota_d = \iota_{d'} \circ \iota_{d, d'}$ が成り立つ．$e \in \cat C$ と $f_d \colon d \to e$ with $f_d = f_{d'} \circ \iota_{d, d'}$ ($\forall \iota_{d, d'} \colon d \inc d'$ in $J$) を任意に取り，
-    \[
-      \ext f x \defeq f_d x \quad \text{if} \ x \in d \subset c
-    \]
-    と定める．これはwell-definedである．実際，$d \cap d' \neq \emptyset$ のとき $d \subset d'$ または $d' \subset d'$ であるが，そのとき
-    \[
-      f_d x = f_{d'} |_d x, \quad f_{d'} x = f_d |_{d'} x, \quad \text{resp.}
-    \]
-    となる．これが，唯一の $\ext f \circ \iota_d = f_d$ ($\forall d \in J$) なる射であるのは明らか．よって，$c = \dLim F$, where
-    \begin{itemize}
-      \item $F d = d \in \cat C$ ($d \in J$),
-      \item $F \iota_{d, d'} = \iota_{d, d'} \colon F d \inc F d'$ ($\iota_{d, d'} \colon d \inc d'$ in $J$),
-    \end{itemize}
-    である．
 \end{enumerate}
 
 \subsection{Products and Limits}
