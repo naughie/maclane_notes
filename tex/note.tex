@@ -618,7 +618,7 @@ The cokernel $\opair r u$ of $f$ とは，universal element of the functor $H \c
   \begin{comdia}
     F_i \arrow[dd, "F g"'] \arrow[rrd, "\mu_i"] \arrow[rrrrd, bend left=20, "\tau_i"] \\
     & & \dLim F \arrow[rr, dashrightarrow, "\uniq t"] & & c \\
-    F_j \arrow[rru, "\mu_j"'] \arrow[rrrru, bend right=20, "\tau_j"]
+    F_j \arrow[rru, "\mu_j"'] \arrow[rrrru, bend right=20, "\tau_j"']
   \end{comdia}
 \end{define}
 
@@ -708,7 +708,7 @@ The cokernel $\opair r u$ of $f$ とは，universal element of the functor $H \c
       \item $F H \defeq H \in \Ab$ ($H \in J_A$);
       \item $F \iota_{H, H'} = \iota_{H, H'} \colon F H \inc F H'$ ($\iota_{H, H'} \colon H \inc H'$ in $J_A$).
     \end{itemize}
-    このとき，$A$ はcolimit of $F$ である．実際，任意のabelian group $G$ とgroup homomorphisms $f_H \colon H \to G$ with $f_H = f_{H'} \iota_{H, H'}$ ($\forall \iota_{H, H'} \colon H \inc H'$ in $J_A$) に対して，
+    このとき，$A = \dLim F$ である．実際，任意のabelian group $G$ とgroup homomorphisms $f_H \colon H \to G$ with $f_H = f_{H'} \iota_{H, H'}$ ($\forall \iota_{H, H'} \colon H \inc H'$ in $J_A$) に対して，
     \[
       \ext f x \defeq f_H x \quad \text{if} \ x \in H \subset A
     \]
@@ -722,7 +722,7 @@ The cokernel $\opair r u$ of $f$ とは，universal element of the functor $H \c
     \[
       f_d x = f_{d'} |_d x, \quad f_{d'} x = f_d |_{d'} x, \quad \text{resp.}
     \]
-    となる．これが，唯一の $\ext f \circ \iota_d = f_d$ ($\forall d \in J$) なる射であるのは明らか．よって，$c$ は colimit of $F$, where
+    となる．これが，唯一の $\ext f \circ \iota_d = f_d$ ($\forall d \in J$) なる射であるのは明らか．よって，$c = \dLim F$, where
     \begin{itemize}
       \item $F d = d \in \cat C$ ($d \in J$),
       \item $F \iota_{d, d'} = \iota_{d, d'} \colon F d \inc F d'$ ($\iota_{d, d'} \colon d \inc d'$ in $J$),
