@@ -18,6 +18,9 @@
 \newcommand\op{\mathrm{op}}
 \newcommand\nattr{\stackrel{.}{\to}}
 \newcommand\pushoutc{{\cdot \leftarrow \cdot \rightarrow \cdot}}
+\newcommand\dLim\varinjlim
+\newcommand\rLim\varprojlim
+\DeclareMathOperator\colim{colim}
 \newcommand\Vect{\catb{Vect}}
 \newcommand\Set{\catb{Set}}
 \newcommand\Grp{\catb{Grp}}
@@ -577,6 +580,60 @@ The cokernel $\opair r u$ of $f$ とは，universal element of the functor $H \c
 \item $\cat C = \Set, \Tops, \Grp, \Ab, \Rng, \lMod$, \etcetra, とする．$\opair f g \colon \opair a a \to \opair b c$ のpushoutは，$b \amalg c$ において，$f x \in b$ と $g x \in c$ を同一視したものである．（演習問題(2)参照．）
 \end{exs}
 
+\subsubsection*{Cokernel Pair}
+
+\begin{define}
+  $\cat C$ をcategory，$f \colon a \to b$ とする．The \defterm{cokernel pair of $f$}とは，pushout of $\opair f f$ のことである，\thatis,$r \in \cat C$ と $u, v \colon b \rightrightarrows r$ with $u f = v f$ であって，任意の射 $h, k \colon b \rightrightarrows s$ with $h f = k f$ に対して，唯一つの射 $t \colon r \to s$ が存在して，$t u = h$ かつ $t v = k$ とできることをいう．
+  \begin{comdia}
+    a \arrow[rr, "f"] & & b \arrow[rr, shift left, "u"] \arrow[rr, shift right, "v"'] \arrow[rrdd, shift left, "h"] \arrow[rrdd, shift right, "k"'] & & r \arrow[dd, dashrightarrow, "\uniq t"] \\
+    \\
+    & & & & s
+  \end{comdia}
+\end{define}
+
+\subsubsection*{Colimits}
+
+今までの議論を一般化する．$\cat C, J$ をcategoriesとする．$\Delta \colon \cat C \to \cat C^J$ を，次のように定まるfunctor, called \defterm{diagonal functor}, とする：
+\begin{itemize}
+  \item obj.: $\Delta c \colon J \to \cat C$, constant functor, \thatis, $(\Delta c) i = c$ and $(\Delta c) g = 1_c$ ($i, j \in \cat C$, $g \colon i \to j$);
+  \item arr.: $\Delta f \colon \Delta c \nattr \Delta c'$, constant transformation, \thatis, $(\Delta f)i = f \colon c \to c'$ ($f \colon c \to c'$, $i \in J$).
+\end{itemize}
+
+このとき，natural transformation $\tau \colon F \nattr \Delta c$ は，射の族 $\fmly{\tau_i \colon F_i \to c}_{i \in J}$ であって，各 $g \colon i \to j$ に対して $\tau_i = \tau_j \circ F g$ なるものである．
+
+\begin{comdia}
+  F_i \arrow[dd, "F g"'] \arrow[rrd, "\tau_i"] \\
+  & & c \\
+  F_j \arrow[rru, "\tau_j"']
+\end{comdia}
+
+これを，\defterm{cone from base $F$ to the vertex $c$}という．
+
+\begin{define}
+  $\cat C, J$ をcategoriesとし，$F \colon J \cat C$ をfunctorとする．A \defterm{colimit of $F$} (or, a \defterm{direct limit}, a \defterm{inductive limit} of $F$) とは，universal arrow $\opair{r \in \cat C}{\mu \colon F \nattr \Delta r}$ from $F$ to $\Delta$  のことである．
+  \[
+    r = \dLim F = \colim F
+  \]
+  などと書く．$\mu$ を\defterm{limiting cone}, or \defterm{universal cone} from $F$ という．
+  \begin{comdia}
+    F_i \arrow[dd, "F g"'] \arrow[rrd, "\mu_i"] \arrow[rrrrd, bend left=20, "\tau_i"] \\
+    & & \dLim F \arrow[rr, dashrightarrow, "\uniq t"] & & c \\
+    F_j \arrow[rru, "\mu_j"'] \arrow[rrrru, bend right=20, "\tau_j"]
+  \end{comdia}
+\end{define}
+
+\begin{exs}
+\item $J = \omega = \{ 0 \to 1 \to 2 \to \dotsb \}$, $\cat C = \Set$ とする．A functor $F \colon \omega \to \Set$ とは，昇鎖
+  \[
+    F_0 \subset F_1 \subset F_2 \subset \dotsb
+  \]
+  のことである．このとき，
+  \[
+    \dLim F = U \defeq \bigcup_n F_n
+  \]
+  であり，inclusions $F_i \inc U$ がlimiting coneとなる．$\cat C = \Grp, \Ab$, \etcetra, でも同様．
+\end{exs}
+
 \subsubsection*{Exercises}
 \begin{enumerate}[label=(\arabic*)]
   \setcounter{enumi}{1}%
@@ -642,6 +699,35 @@ The cokernel $\opair r u$ of $f$ とは，universal element of the functor $H \c
       \\
       & & d \arrow[rruu, leftarrow, "g"']
     \end{comdia}
+  \item $A$ をabelian group，
+    \[
+      J_A \defeq \{ H \le A \deli \text{finitely generated} \}
+    \]
+    とおくと，$J_A$ は包含関係について前順序集合（従ってcategory）となる．$F \colon J_A \to \Ab$ を，次で定義されるfunctorとする：
+    \begin{itemize}
+      \item $F H \defeq H \in \Ab$ ($H \in J_A$);
+      \item $F \iota_{H, H'} = \iota_{H, H'} \colon F H \inc F H'$ ($\iota_{H, H'} \colon H \inc H'$ in $J_A$).
+    \end{itemize}
+    このとき，$A$ はcolimit of $F$ である．実際，任意のabelian group $G$ とgroup homomorphisms $f_H \colon H \to G$ with $f_H = f_{H'} \iota_{H, H'}$ ($\forall \iota_{H, H'} \colon H \inc H'$ in $J_A$) に対して，
+    \[
+      \ext f x \defeq f_H x \quad \text{if} \ x \in H \subset A
+    \]
+    と定めれば，これが $\ext f \circ \iota_H = f_H$ ($\forall \iota_H \colon H \in J_A \inc A$) なる唯一のgroup homomorphismである．（$A = \bigcup_{H \in J_A} J_A$ に注意せよ．）
+
+    これを一般化する．$\cat C = \Set, \Tops, \Grp, \Ab, \Rng, \lMod$, \etcetra, とする．$J$ をfamily of objects of $\cat C$ とし，包含関係について前順序集合と見る．$c$ を，$\bigcup_{d \in J} d$ から生成されるfree object (\thatis, coproduct of $J$) を各 $\iota_{d, d'} \colon d \inc d'$ で割ったのもとする．自然な包含写像 $\iota_d \colon d \inc c$ を取る．明らかに，すべての $\iota_{d, d'} \colon d \inc d'$ に対して，$\iota_d = \iota_{d'} \circ \iota_{d, d'}$ が成り立つ．$e \in \cat C$ と $f_d \colon d \to e$ with $f_d = f_{d'} \circ \iota_{d, d'}$ ($\forall \iota_{d, d'} \colon d \inc d'$ in $J$) を任意に取り，
+    \[
+      \ext f x \defeq f_d x \quad \text{if} \ x \in d \subset c
+    \]
+    と定める．これはwell-definedである．実際，$d \cap d' \neq \emptyset$ のとき $d \subset d'$ または $d' \subset d'$ であるが，そのとき
+    \[
+      f_d x = f_{d'} |_d x, \quad f_{d'} x = f_d |_{d'} x, \quad \text{resp.}
+    \]
+    となる．これが，唯一の $\ext f \circ \iota_d = f_d$ ($\forall d \in J$) なる射であるのは明らか．よって，$c$ は colimit of $F$, where
+    \begin{itemize}
+      \item $F d = d \in \cat C$ ($d \in J$),
+      \item $F \iota_{d, d'} = \iota_{d, d'} \colon F d \inc F d'$ ($\iota_{d, d'} \colon d \inc d'$ in $J$),
+    \end{itemize}
+    である．
 \end{enumerate}
 
 \subsection{Products and Limits}
