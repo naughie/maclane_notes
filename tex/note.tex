@@ -4,7 +4,7 @@
 \author{Naughie}
 \date{}
 \newcommand\cat\mathscr
-\renewcommand\defterm[1]{ \textbf{\emph{#1}} }
+\renewcommand\defterm[1]{ \index{#1}\textbf{\emph{#1}} }
 \newcommand\opair[2]{\langle #1, #2 \rangle}
 \newcommand\ext\tilde
 \newcommand\genby[1]{\langle #1 \rangle}
@@ -19,7 +19,7 @@
 \newcommand\nattr{\stackrel{.}{\to}}
 \newcommand\pushoutc{{\cdot \leftarrow \cdot \rightarrow \cdot}}
 \newcommand\dLim\varinjlim
-\newcommand\rLim\varprojlim
+\newcommand\iLim\varprojlim
 \DeclareMathOperator\colim{colim}
 \newcommand\Vect{\catb{Vect}}
 \newcommand\Set{\catb{Set}}
@@ -353,7 +353,7 @@ Yoneda functorの双対 $Y' \colon \cat D \to \Set^{\cat D^\op}$ は，次で定
 逆に，これらのfunctor $Y, Y'$ が定義できるのなら，$\cat D$ はcategory whose hom-sets are smallでなければならない．なぜなら，このとき任意の $r, s \in \cat D$ に対して，$\cat D (r, s) = (Y r) s = (Y' s)r \in \Set$ はsmallだからである．
 より大きい $\cat D$ に対しても，$\Set$ を $\Ens$ に置き換えたものが同様に成立する．
 
-\subsection{Coproducts and Colimits}
+\subsection{Coproducts and Colimits}\label{subsec:coproducts-and-colimits}
 
 \subsubsection*{Coproducts}
 
@@ -595,14 +595,14 @@ The cokernel $\opair r u$ of $f$ とは，universal element of the functor $H \c
 
 今までの議論を一般化する．$\cat C, J$ をcategoriesとする．$\Delta \colon \cat C \to \cat C^J$ を，次のように定まるfunctor, called \defterm{diagonal functor}, とする：
 \begin{itemize}
-  \item obj.: $\Delta c \colon J \to \cat C$, constant functor, \thatis, $(\Delta c) i = c$ and $(\Delta c) g = 1_c$ ($i, j \in \cat C$, $g \colon i \to j$);
+  \item obj.: $\Delta c \colon J \to \cat C$, constant functor, \thatis, $(\Delta c) i = c$ and $(\Delta c) u = 1_c$ ($i, j \in \cat C$, $u \colon i \to j$);
   \item arr.: $\Delta f \colon \Delta c \nattr \Delta c'$, constant transformation, \thatis, $(\Delta f)i = f \colon c \to c'$ ($f \colon c \to c'$, $i \in J$).
 \end{itemize}
 
-このとき，natural transformation $\tau \colon F \nattr \Delta c$ は，射の族 $\fmly{\tau_i \colon F_i \to c}_{i \in J}$ であって，各 $g \colon i \to j$ に対して $\tau_i = \tau_j \circ F g$ なるものである．
+このとき，natural transformation $\tau \colon F \nattr \Delta c$ は，射の族 $\fmly{\tau_i \colon F_i \to c}_{i \in J}$ であって，各 $u \colon i \to j$ に対して $\tau_i = \tau_j \circ F u$ なるものである．
 
 \begin{comdia}
-  F_i \arrow[dd, "F g"'] \arrow[rrd, "\tau_i"] \\
+  F_i \arrow[dd, "F u"'] \arrow[rrd, "\tau_i"] \\
   & & c \\
   F_j \arrow[rru, "\tau_j"']
 \end{comdia}
@@ -616,7 +616,7 @@ The cokernel $\opair r u$ of $f$ とは，universal element of the functor $H \c
   \]
   などと書く．$\mu$ を\defterm{limiting cone}, or \defterm{universal cone} from $F$ という．
   \begin{comdia}
-    F_i \arrow[dd, "F g"'] \arrow[rrd, "\mu_i"] \arrow[rrrrd, bend left=20, "\tau_i"] \\
+    F_i \arrow[dd, "F u"'] \arrow[rrd, "\mu_i"] \arrow[rrrrd, bend left=20, "\tau_i"] \\
     & & \dLim F \arrow[rr, dashrightarrow, "\uniq t"] & & c \\
     F_j \arrow[rru, "\mu_j"'] \arrow[rrrru, bend right=20, "\tau_j"']
   \end{comdia}
@@ -718,4 +718,90 @@ The cokernel $\opair r u$ of $f$ とは，universal element of the functor $H \c
 
 \subsection{Products and Limits}
 
+ここでは，\S \ref{subsec:coproducts-and-colimits} の双対を述べる．
+
+$\cat C, J$ をcategory，$F \colon J \to \cat C$ をfunctorとする．A natural transformation $\tau \colon \Delta c \nattr F$ を\defterm{cone to the base $F$ from the vertex $c$}という．
+
+\begin{define}
+  $\cat C, J$ をcategory，$F \colon J \to \cat C$ をfunctorとする．A \defterm{limit of $F$} (or, a \defterm{inverse limit}, a \defterm{projective limit} of $F$) とは，universal arrow $\opair{r \in \cat C}{\nu \colon \Delta r \nattr F}$ from $\Delta$ to $F$ のことである．
+  \[
+    r = \iLim F = \lim F
+  \]
+  などと書く．$\nu$ を\defterm{limiting cone}, of \defterm{universal cone} to $F$ という．
+  \begin{comdia}
+    F_i \arrow[dd, leftarrow, "F u"'] \arrow[rrd, leftarrow, "\nu_i"] \arrow[rrrrd, bend left=20, leftarrow, "\tau_i"] \\
+    & & \iLim F \arrow[rr, dashleftarrow, "\uniq t"] & & c \\
+    F_j \arrow[rru, leftarrow, "\nu_j"'] \arrow[rrrru, bend right=20, leftarrow, "\tau_j"']
+  \end{comdia}
+\end{define}
+
+次のようなnatural isomorphisms in $c$ がある：
+\begin{align*}
+  \cat C (c, \iLim F) \iso & \Nat (\Delta c, F) = \Cone (c, F), \\
+  \Cone (F, c) = & \Nat (F, \Delta c) \iso \cat C (\dLim F, c).
+\end{align*}
+
+\subsubsection*{Products}
+
+$J = \{ 0, 1 \}$ をdiscrete categoryとし，$F \colon \{ 0, 1 \} \to \cat C$ をfunctorとする．$F$ は，objects $\opair a b$ of $\cat C$ と見なせる．The limit of $F = \opair a b$ を，\defterm{product of $a$ and $b$}といい，
+\[
+  \iLim F = a \times b
+\]
+と書く．
+
+$a \times b$ は，\defterm{projections}と呼ばれる二つの普遍射 $p \colon a \times b \to a$ と $q \colon a \times b \to b$ を持つ：
+\begin{comdia}
+  a \arrow[rr, leftarrow, "p"] \arrow[rrdd, leftarrow, "f"'] & & a \times b \arrow[rr, "q"] \arrow[dd, dashleftarrow, "\uniq h"] & & b \\
+  \\
+  & & c \arrow[rruu, "g"']
+\end{comdia}
+
+次の全単射がある：
+\[
+  \cat C (c, a) \times \cat C (c, b) \iso \cat C (c, a \times b), \quad \opair f g \mapsto h,
+\]
+with inverse $h \mapsto \opair{p h}{q h}$. $f, g$ を $h$ の\defterm{components}という．
+
+\begin{exs}
+\item $\cat C = \Set, \Tops, \Cat, \Grp, \Rng, \lMod$, \etcetra, では，productsはdirect products（に適切な構造を入れたもの）である．
+\end{exs}
+
+\subsubsection*{Infinite Products}
+
+$J = X$ をsetとすると，functor $F \colon X \to \cat C$ は，単に $X$-indexed family $\fmly{a_x \in \cat C}_{x \in X}$ である．また，cone $\tau \colon \Delta c \to F$ to $F$ from $c$ とは，$X$-indexed family $\fmly{\tau_x \colon c \to a_x}_{x \in X}$ of arrowsである．
+
+\begin{define}
+  $\cat C$ をcategory，$X$ をsetとする．$F = \fmly{a_x}_{x \in X} \colon X \to \cat C$ をfunctorとする．The limit $\opair{\iLim F}{p}$ of $F$ を\defterm{product of $a_x$}といい，$p = \fmly{p_x \colon \iLim F \to a_x}_{x \in X}$ を\defterm{projections}という．
+  \[
+    \iLim F = \prod_{x \in X} a_x = \prod a_x = \prod a
+  \]
+  などと書く．
+  \begin{comdia}
+    a_x \arrow[rr, leftarrow, "p_x"] \arrow[rrdd, leftarrow, "f_x"'] & & \prod_{x' \in X} a_{x'} \arrow[dd, dashleftarrow, "\uniq \ext f"] \\
+    \\
+                                                                     & & c
+  \end{comdia}
+\end{define}
+
+次のnatural isomorphisms in $c$ がある：
+\[
+  \prod_x \cat C (c, a_x) \iso \cat C \left( c, \prod_x a_x \right), \quad \fmly{f_x}_x \mapsto \ext f,
+\]
+with inverse $\ext f \mapsto \fmly{p_x \ext f}_x$. $f_x$ を $\ext f$ の\defterm{components}という．
+
+\subsubsection*{Powers}
+
+$b = \fmly{b_x = a}_{x \in X} \in \cat C^X$ のproductを\defterm{power of $a$}といい，$a^X \defeq \prod_x a$ と書く．このとき，
+\[
+  \cat C (c, a)^X \iso \cat C (c, a^X), \quad \text{naturally in}\ c.
+\]
+
+\subsubsection*{Equalizers}
+
+\subsubsection*{Pullbacks}
+
+\subsubsection*{Exercises}
+
+
+\printindex
 \end{document}
