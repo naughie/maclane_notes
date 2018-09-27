@@ -11,7 +11,7 @@ GITPUSH = push $(ORIGIN) $(BRANCH)
 
 SCRIPTDIR = ./script
 SCRIPT = $(SCRIPTDIR)/convert.rb
-CONVERT = ruby $(SCRIPT) $(CHAPTERS)
+CONVERT = ruby $(SCRIPT)
 
 all: conv git
 
@@ -22,3 +22,12 @@ git:
 	$(GIT) $(GITADD) && \
 	$(GIT) $(GITCOM) && \
 	$(GIT) $(GITPUSH)
+
+define convOneFile
+$(1): conv$(1) git
+
+conv$(1):
+	$(CONVERT) $(1)
+endef
+
+$(foreach chap,$(CHAPTERS),$(eval $(call convOneFile,$(chap))))
