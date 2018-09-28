@@ -798,7 +798,65 @@ $b = \fmly{b_x = a}_{x \in X} \in \cat C^X$ のproductを\defterm{power of $a$}�
 
 \subsubsection*{Equalizers}
 
+$J = \downdownarrows$ とすると，functor $F \colon \downdownarrows \to \cat C$ は，射 $f, g \colon b  \rightrightarrows a$ in $\cat C$ である．
+
+\begin{define}
+  $\cat C$ をcategoryとし，$F = \opair f g \colon \downdownarrows \to \cat C$ をfunctorとする．The limit $\opair{e = \iLim F}{u \colon e \to b}$ of $F$ を\defterm{equalizer of $F$}という．
+  \begin{comdia}
+    e \arrow[rr, "u"] \arrow[dd, dashleftarrow, "\uniq \ext h"'] & & b \arrow[rr, shift left, "f"] \arrow[rr, shift right, "g"'] & & a \\
+    \\
+    c \arrow[rruu, "h"]
+  \end{comdia}
+\end{define}
+
+\begin{exs}
+\item $\cat C = \Set, \Tops, \Grp, \Ab, \Rng, \lMod$, \etcetra, とする．$f, g \colon b \rightrightarrows a$ のequalizerとは，$e = \{ x \in b \deli f x = g x \} \inc b $ である．特に，$\Grp, \Ab, \Rng, \lMod$, \etcetra, では，$\ker (f - g) \inc b$ である．
+\end{exs}
+
 \subsubsection*{Pullbacks}
+
+$J = \pushoutc$ とすると，functor $F \colon \pushoutc \to \cat C$ は，射 $\opair f g \colon \opair b d \to \opair a a$ のことである．$F$ のconeは，
+\begin{comdia}
+  c \arrow[rr, "k"] \arrow[dd, "h"'] & & d \arrow[dd, "g"] \\
+  \\
+  b \arrow[rr, "f"'] & & a
+\end{comdia}
+である．
+
+\begin{define}
+  $\cat C$ をcategory，$F = \opair f g \colon \pushoutc \to \cat C$ をfunctorとする．The limit $\opair{r = \iLim F}{\opair p q \colon \opair c c \to \opair b d}$ of $F$ を\defterm{pullback of $f, g$}といい，
+  \[
+    r = b \times_a d
+  \]
+  などと書く．
+  \begin{comdia}
+    & & b \arrow[rrdd, leftarrow, "p"] \arrow[rrrrdd, bend left=20, leftarrow, "h"] \\
+    \\
+    a \arrow[rruu, leftarrow, "f"] \arrow[rrdd, leftarrow, "g"'] & & & & b \times_a d \arrow[rr, dashleftarrow, "\uniq t"] & & s \\
+    \\
+                                                                 & & d \arrow[rruu, leftarrow, "q"'] \arrow[rrrruu, bend right=20, leftarrow, "k"']
+  \end{comdia}
+\end{define}
+
+\begin{define}
+  $\cat C$ をcategory，$f \colon b \to a$ とする．The \defterm{kernel pair of $f$}とは，pullback of $\opair f f$ のことである．
+  \begin{comdia}
+    r \arrow[rr, shift left, "u"] \arrow[rr, shift right, "v"'] \arrow[dd, dashleftarrow, "\uniq t"] & & b \arrow[rr, "f"] & & a \\
+    \\
+    s \arrow[rruu, shift left, "h"] \arrow[rruu, shift right, "k"']
+  \end{comdia}
+\end{define}
+
+\subsubsection*{Others}
+
+$J = 0$ をempty categoryとすると，functor $F \colon 0 \to \cat C$ は唯一つしかなく（empty functor），coneは単にobject $c \in \cat C$ である．従って，limit of the empty functorは，terminal object $t \in \cat C$ のことである．
+
+Limitsを，functor $J \to \cat C$ に対してではなく，diagram $D \colon G \to U \cat C$, where $G$ is a graph and $U \colon \Cat \to \Grph$ is a forgetful functor, に対して考えた方が便利な場合もある．このとき，cone $\mu \colon c \nattr D$ とは，各 $i \in G$ に対して射 $\mu_i \colon c \to D_i$ が定まり，任意の $h \colon i \to j$ に対して $D h \circ \mu_i = \mu_j$ となるものである．
+\begin{comdia}
+  D_j \arrow[dd, leftarrow, "F h"'] \arrow[rrd, leftarrow, "\lambda_j"] \arrow[rrrrd, bend left=20, leftarrow, "\mu_j"] \\
+  & & \iLim D \arrow[rr, dashleftarrow, "\uniq t"] & & c \\
+  D_i \arrow[rru, leftarrow, "\lambda_i"'] \arrow[rrrru, bend right=20, leftarrow, "\mu_i"']
+\end{comdia}
 
 \subsubsection*{Exercises}
 
