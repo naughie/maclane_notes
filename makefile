@@ -1,5 +1,5 @@
 TARDIR = ./docs/maclane
-CHAPTERS = 2 3
+CHAPTERS = 2 3 3_2
 TARGET = $(wildcard $(TARDIR)/*.pdf)
 MESSAGE = "Snapshot at `date -R`"
 ORIGIN = origin
@@ -28,8 +28,6 @@ git:
 
 
 define convOneFile
-$(1): cp$(1) conv$(1) git$(1)
-
 cp$(1):
 	cp $(NOTEPDF) $(TARDIR)/$(1).pdf
 
@@ -43,3 +41,9 @@ git$(1):
 endef
 
 $(foreach chap,$(CHAPTERS),$(eval $(call convOneFile,$(chap))))
+
+2: conv2 git2
+
+3: cp3 conv3 git3
+
+3_2: conv3_2 git3_2
